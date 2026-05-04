@@ -12,7 +12,7 @@
             color: #fff;
             font-family: "Helvetica Neue", Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -20,57 +20,80 @@
         }
 
         #clock {
-            font-size: 80px;
+            font-size: 75px;
             font-weight: 200;
-            margin-top: 20px;
+            margin-top: 10px;
             letter-spacing: 2px;
+            line-height: 1;
         }
 
         #date {
-            font-size: 24px;
+            font-size: 22px;
             color: #888;
-            margin-bottom: 25px;
+            margin-top: 5px;
+            margin-bottom: 15px;
         }
 
-        /* 自作カレンダーのスタイル */
+        /* 天気エリア */
+        #weather-container {
+            width: 90%;
+            max-width: 450px;
+            margin-bottom: 15px;
+        }
+
+        /* カレンダーエリア */
         #calendar-container {
             width: 90%;
-            max-width: 500px;
+            max-width: 450px;
             border-top: 1px solid #333;
-            padding-top: 20px;
+            padding-top: 15px;
         }
 
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 10px;
+            gap: 8px;
             text-align: center;
         }
 
         .weekday {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
             font-weight: bold;
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
 
+        /* 曜日ごとの色分け（ヘッダー） */
+        .weekday:nth-child(1) { color: #d9534f; } /* 日曜 */
+        .weekday:nth-child(7) { color: #428bca; } /* 土曜 */
+
         .day {
-            font-size: 20px;
+            font-size: 19px;
             color: #fff;
-            padding: 10px 0;
+            padding: 8px 0;
             border-radius: 4px;
         }
 
-        /* 今日の日付を強調するデザイン（グレーの枠線でシンプルに） */
+        /* 今日の日付（枠線で強調） */
         .today {
             background-color: #222;
-            border: 1px solid #555;
+            border: 1px solid #666;
             font-weight: bold;
         }
 
-        /* 先月・来月の日付は暗くする */
+        /* 先月・来月の日付 */
         .off {
-            color: #333;
+            color: #252525 !important;
+        }
+
+        /* 日曜・祝日の色 */
+        .holiday, .sunday {
+            color: #d9534f;
+        }
+
+        /* 土曜の色 */
+        .saturday {
+            color: #428bca;
         }
     </style>
 </head>
@@ -79,14 +102,28 @@
     <div id="clock">00:00</div>
     <div id="date">YYYY/MM/DD</div>
 
+    <div id="weather-container">
+        <a class="weatherwidget-io" href="https://weatherwidget.io/w/ja/130046/yokosuka/" data-label_1="YOKOSUKA" data-label_2="WEATHER" data-font="Arial" data-icons="Climacons Animated" data-theme="pure" data-basecolor="#000000" data-accent="" data-days="3" >YOKOSUKA WEATHER</a>
+        <script>
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+        </script>
+    </div>
+
     <div id="calendar-container">
-        <div class="calendar-grid" id="calendar">
-            </div>
+        <div class="calendar-grid" id="calendar"></div>
     </div>
 
     <script>
-        // Day.jsの設定
         dayjs.locale('ja');
+
+        // 日本の祝日（簡易版：2026年の主要な祝日リスト）
+        const holidays2026 = [
+            "2026-01-01", "2026-01-12", "2026-02-11", "2026-02-23",
+            "2026-03-20", "2026-04-29", "2026-05-03", "2026-05-04",
+            "2026-05-05", "2026-05-06", "2026-07-20", "2026-08-11",
+            "2026-09-21", "2026-09-22", "2026-09-23", "2026-10-12",
+            "2026-11-03", "2026-11-23"
+        ];
 
         function updateClock() {
             const now = dayjs();
@@ -99,14 +136,12 @@
             const startOfMonth = now.startOf('month');
             const endOfMonth = now.endOf('month');
             
-            // カレンダーの表示開始日（月曜始まりにするか日曜始まりにするか。ここでは日曜始まり）
             let startDay = startOfMonth.startOf('week');
             const endDay = endOfMonth.endOf('week');
 
             const calendarEl = document.getElementById('calendar');
             calendarEl.innerHTML = '';
 
-            // 曜日のヘッダーを追加
             const weekdays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
             weekdays.forEach(day => {
                 const dayEl = document.createElement('div');
@@ -115,20 +150,32 @@
                 calendarEl.appendChild(dayEl);
             });
 
-            // 日付のマス目を追加
             let date = startDay;
             while (date.isBefore(endDay) || date.isSame(endDay, 'day')) {
                 const dayEl = document.createElement('div');
                 dayEl.classList.add('day');
                 dayEl.textContent = date.date();
 
-                // 当月以外の日付
+                const dateStr = date.format('YYYY-MM-DD');
+
+                // 曜日・祝日の判定と色付け
                 if (date.month() !== now.month()) {
                     dayEl.classList.add('off');
-                }
-                // 今日
-                if (date.isSame(now, 'day')) {
-                    dayEl.classList.add('today');
+                } else {
+                    if (date.day() === 0) {
+                        dayEl.classList.add('sunday');
+                    } else if (date.day() === 6) {
+                        dayEl.classList.add('saturday');
+                    }
+                    
+                    // 祝日リストに含まれているか判定
+                    if (holidays2026.includes(dateStr)) {
+                        dayEl.classList.add('holiday');
+                    }
+
+                    if (date.isSame(now, 'day')) {
+                        dayEl.classList.add('today');
+                    }
                 }
 
                 calendarEl.appendChild(dayEl);
@@ -136,7 +183,6 @@
             }
         }
 
-        // 初回実行と定期更新
         setInterval(updateClock, 1000);
         updateClock();
         buildCalendar();
