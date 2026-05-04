@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Display</title>
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #clock {
+            font-size: 80px;
+            font-weight: 200;
+            margin-top: 50px;
+            letter-spacing: 2px;
+        }
+
+        #date {
+            font-size: 24px;
+            color: #888;
+            margin-bottom: 40px;
+        }
+
+        .widget {
+            width: 90%;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="clock">00:00</div>
+    <div id="date">YYYY/MM/DD</div>
+
+    <div class="widget">
+        <p style="color: #666;">ここにカレンダーや天気を追加していきます</p>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const y = now.getFullYear();
+            const mon = now.getMonth() + 1;
+            const d = now.getDate();
+            const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+            
+            document.getElementById('clock').textContent = `${h}:${m}`;
+            document.getElementById('date').textContent = `${y}.${mon}.${d} ${days[now.getDay()]}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
