@@ -19,21 +19,25 @@
     color: #fff;
     font-family: "Helvetica Neue", Arial, sans-serif;
     
-    /* 外部URLをやめて、自分のフォルダの画像を見る設定 */
-    background-image: url('https://tmyskkbn-spec.github.io/my-panel/bg.jpg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
+    /* 背景画像の設定（z-indexの影響を受けないよう、ここでのurl指定はやめる） */
+    background: none;
     position: relative;
 }
 
+/* 背景専用のレイヤーを作る（これが一番確実です） */
 body::before {
     content: "";
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.6); 
-    z-index: -1;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    /* 画像を読み込み、その上に薄く黒を重ねる */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                      url("https://tmyskkbn-spec.github.io/my-panel/bg.jpg");
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* 文字の後ろへ */
 }
 
         #clock {
