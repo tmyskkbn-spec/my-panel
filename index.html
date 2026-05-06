@@ -119,19 +119,53 @@
             color: rgba(255, 255, 255, 0.15) !important;
             text-shadow: none;
         }
+    /* 画面の横幅が縦幅より大きい（横向き）時の設定 */
+@media (orientation: landscape) {
+    body {
+        flex-direction: row; /* 縦並びから横並びに変更 */
+        justify-content: space-around;
+        align-items: center;
+        padding: 20px;
+    }
+
+    /* 左側：カレンダー容器 */
+    #calendar-container {
+        flex: 1;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    /* 右側：情報をまとめるための仮のグループ（後述のHTML修正が必要） */
+    .info-group {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* 横向きの時は時計を少し小さくしてバランスを取る */
+    #clock {
+        font-size: 100px; 
+        margin-bottom: 10px;
+    }
+}
     </style>
 </head>
 <body>
+    <!-- 左側にくる要素 -->
     <div id="calendar-container">
         <div class="calendar-grid" id="calendar"></div>
     </div>
 
-    <div id="date">YYYY.M.D DAY</div>
-
-    <div id="clock">00:00</div>
-
-    <div id="weather-container">
-        <div id="weather-text">WEATHER LOADING...</div>
+    <!-- 右側にくる要素をグループ化 -->
+    <div class="info-group">
+        <div id="date">YYYY.M.D DAY</div>
+        <div id="clock">00:00</div>
+        <div id="weather-container">
+            <div id="weather-text">WEATHER LOADING...</div>
+        </div>
     </div>
 
     <script>
