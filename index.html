@@ -33,53 +33,6 @@
         position: relative;
     }
 
-        #clock {
-            font-size: 90px;
-            font-weight: 200;
-            margin-top: 5px;
-            letter-spacing: 2px;
-            line-height: 1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* 文字の視認性を上げる影 */
-        }
-
-        #date {
-            font-size: 22px;
-            color: #ccc;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-        }
-
-        /* 天気エリア */
-        #weather-container {
-            width: 90%;
-            max-width: 450px;
-            height: 60px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 5px 0;
-            background-color: rgba(0, 0, 0, 0.3); /* 天気部分の背景を少し暗く */
-            border-radius: 6px;
-        }
-
-        #weather-text {
-            font-size: 20px;
-            color: #ddd;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        #weather-text i {
-            font-size: 28px;
-            color: #fff;
-        }
-
         /* カレンダーエリア */
         #calendar-container {
             width: 90%;
@@ -129,6 +82,56 @@
             color: rgba(255, 255, 255, 0.15) !important;
             text-shadow: none;
         }
+        #date {
+            font-size: 22px;
+            color: #ccc;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+        }
+        
+        #clock {
+            font-size: 90px;
+            font-weight: 200;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            line-height: 1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8); /* 文字の視認性を上げる影 */
+        }
+
+        
+
+        /* 天気エリア */
+        #weather-container {
+            width: 90%;
+            max-width: 450px;
+            height: 60px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 5px 0;
+            background-color: rgba(0, 0, 0, 0.3); /* 天気部分の背景を少し暗く */
+            border-radius: 6px;
+        }
+
+        #weather-text {
+            font-size: 20px;
+            color: #ddd;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #weather-text i {
+            font-size: 28px;
+            color: #fff;
+        }
+
+        
     </style>
 </head>
 <body>
