@@ -8,110 +8,111 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background-color: #f4f1ea; 
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Orbitron', sans-serif;
-            color: #333;
-            overflow: hidden;
-        }
+    background-color: #f4f1ea; 
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    color: #333;
+    overflow: hidden;
+}
 
-        /* ポスター画像部分 */
-        .art-container {
-            margin-top: 5vh;
-            width: 85%;
-            flex: 1;
-            background-image: url("may2.jpg"); /* あなたの画像ファイル名 */
-            background-size: cover;
-            background-position: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
+/* ポスター画像部分 */
+.art-container {
+    margin-top: 4vh;
+    width: 85%;
+    flex: 1;
+    background-image: url("may2.jpg");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
 
-        /* 下部情報エリア */
-        .footer-section {
-            width: 85%;
-            padding: 3vh 0 5vh 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end; /* 下揃え */
-        }
+/* 下部情報エリア */
+.footer-section {
+    width: 85%;
+    padding: 2vh 0 4vh 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* 下揃えをキープ */
+}
 
-        /* 左：日付・天気・時計の順に整理 */
-        .footer-left {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-        }
+/* 左：日付・天気・時計の順に整理 */
+.footer-left {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
 
-        #date {
-            font-size: 18px;
-            letter-spacing: 3px;
-            opacity: 0.7;
-            margin-bottom: 2px;
-        }
+#date {
+    font-size: 22px; /* 18pxから拡大 */
+    letter-spacing: 3px;
+    opacity: 0.8;
+    margin-bottom: 4px;
+    font-weight: 700; /* 少し太めにして視認性UP */
+}
 
-        #weather-text {
-            font-size: 15px;
-            letter-spacing: 2px;
-            opacity: 0.6;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
+#weather-text {
+    font-size: 18px; /* 15pxから拡大 */
+    letter-spacing: 2px;
+    opacity: 0.6;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
 
-        #clock {
-            font-size: 72px; 
-            line-height: 0.9;
-            letter-spacing: 6px;
-            font-weight: 700;
-            color: #222;
-        }
+#clock {
+    font-size: 110px; /* 72pxから大幅に拡大 */
+    line-height: 0.85;
+    letter-spacing: 4px;
+    font-weight: 700;
+    color: #222;
+}
 
-        /* 右：カレンダー */
-        .footer-right {
-            text-align: right;
-        }
+/* 右：カレンダー */
+.footer-right {
+    text-align: right;
+}
 
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 6px;
-            font-size: 11px;
-        }
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px; /* 隙間を少し広げて見やすく */
+    font-size: 15px; /* 11pxから拡大 */
+}
 
-        .calendar-day {
-            width: 28px;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            z-index: 1;
-        }
+.calendar-day {
+    width: 36px;  /* 28pxから拡大 */
+    height: 36px; /* 28pxから拡大 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+}
 
-        /* 今日の強調：黒い円形 */
-        .today {
-            font-weight: bold;
-            color: #fff !important;
-        }
+/* 今日の強調：黒い円形（サイズアップに対応） */
+.today {
+    font-weight: bold;
+    color: #fff !important;
+}
 
-        .today::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 24px;
-            height: 24px;
-            background-color: rgba(51, 51, 51, 0.9);
-            border-radius: 50%;
-            z-index: -1;
-        }
+.today::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px; /* カレンダー拡大に合わせて円も大きく */
+    height: 32px;
+    background-color: rgba(51, 51, 51, 0.9);
+    border-radius: 50%;
+    z-index: -1;
+}
 
-        .sun, .holiday { color: #e74c3c; font-weight: bold; }
-        .sat { color: #3498db; font-weight: bold; }
+.sun, .holiday { color: #e74c3c; font-weight: bold; }
+.sat { color: #3498db; font-weight: bold; }
     </style>
 </head>
 <body>
